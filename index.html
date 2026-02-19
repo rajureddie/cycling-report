@@ -1,306 +1,789 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Decathlon Cycling Day End Report</title>
+    <title>Cycling Day End Report</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<style>
-*,
-*::before,
-*::after {
+    <style>
+
+/* ============================= */
+/* 🔷 GLOBAL DESIGN SYSTEM */
+/* ============================= */
+
+* {
     box-sizing: border-box;
 }
 
-:root {
-    --primary: #005bbb;
-    --secondary: #f5f7fa;
-    --success: #198754;
-}
-
 body {
-    font-family: 'Segoe UI', sans-serif;
-    background: var(--secondary);
     margin: 0;
-    padding: 16px;
-    overflow-x: hidden;
+    font-family: 'Inter', 'Segoe UI', sans-serif;
+    background: #f4f6f9;
+    color: #1a1a1a;
 }
 
-.container {
-    width: 100%;
-    max-width: 1100px;
-    margin: auto;
-}
+/* ============================= */
+/* 🔷 HEADER */
+/* ============================= */
 
 .header {
-    background: var(--primary);
+    background: linear-gradient(135deg,#003366,#007bff);
     color: white;
-    padding: 20px;
-    border-radius: 12px;
-    margin-bottom: 20px;
+    padding: 25px;
+    text-align: center;
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: 1px;
 }
+
+/* ============================= */
+/* 🔷 CONTAINER */
+/* ============================= */
+
+.container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 30px 20px;
+}
+
+/* ============================= */
+/* 🔷 KPI CARDS */
+/* ============================= */
+
+.kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.kpi-card {
+    background: white;
+    padding: 20px;
+    border-radius: 14px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+}
+
+.kpi-card h4 {
+    margin: 0 0 10px;
+    font-size: 14px;
+    color: #777;
+}
+
+.kpi-card p {
+    margin: 0;
+    font-size: 22px;
+    font-weight: 600;
+}
+
+/* ============================= */
+/* 🔷 CARD SECTION */
+/* ============================= */
 
 .card {
     background: white;
-    border-radius: 12px;
-    padding: 20px;
-    margin-bottom: 20px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+    padding: 28px;
+    border-radius: 16px;
+    box-shadow: 0 6px 25px rgba(0,0,0,0.05);
+    margin-bottom: 30px;
 }
+
+.card h2 {
+    margin-top: 0;
+    margin-bottom: 25px;
+    font-size: 18px;
+    border-left: 4px solid #007bff;
+    padding-left: 10px;
+}
+
+/* ============================= */
+/* 🔷 FORM GRID */
+/* ============================= */
 
 .grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 20px;
-}
-
-.grid > div {
-    display: flex;
-    flex-direction: column;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 22px;
 }
 
 label {
+    font-size: 13px;
     font-weight: 600;
-    font-size: 14px;
     margin-bottom: 6px;
+    display: block;
 }
 
-input,
-textarea {
+input {
     width: 100%;
     padding: 12px;
-    border-radius: 8px;
-    border: 1px solid #ccc;
+    border-radius: 10px;
+    border: 1px solid #ddd;
     font-size: 14px;
+    transition: 0.2s ease;
 }
 
-textarea {
-    resize: vertical;
+input:focus {
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(0,123,255,0.1);
+}
+
+/* ============================= */
+/* 🔷 BUTTONS */
+/* ============================= */
+
+.actions {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    justify-content: center;
 }
 
 button {
-    border: none;
+    padding: 14px 24px;
     border-radius: 10px;
-    padding: 14px;
-    font-size: 16px;
+    border: none;
+    font-weight: 600;
     cursor: pointer;
+    font-size: 14px;
+    transition: 0.2s ease;
 }
 
 .btn-primary {
-    background: var(--primary);
+    background: #007bff;
     color: white;
 }
 
 .btn-success {
-    background: var(--success);
+    background: #28a745;
     color: white;
 }
 
+.btn-dark {
+    background: #333;
+    color: white;
+}
+
+.btn-danger {
+    background: #dc3545;
+    color: white;
+}
+
+button:hover {
+    transform: translateY(-2px);
+    opacity: 0.9;
+}
+
+/* ============================= */
+/* 🔷 REPORT OUTPUT */
+/* ============================= */
+
 .output {
-    background: #e9ecef;
+    white-space: pre-wrap;
+    background: #f9fbff;
+    padding: 20px;
     border-radius: 12px;
-    padding: 16px;
-    white-space: pre-line;
-    font-family: 'Courier New', monospace;
+    font-size: 14px;
+    border: 1px solid #e3e8f0;
 }
 
-@media (max-width: 480px) {
-    .grid {
-        grid-template-columns: 1fr;
+/* ============================= */
+/* 🔷 MESSAGE */
+/* ============================= */
+
+.message {
+    padding: 12px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    display: none;
+    font-weight: 500;
+}
+
+.success { background: #e6ffed; color: #1a7f37; }
+.error { background: #ffe6e6; color: #c0392b; }
+
+/* ============================= */
+/* 🔷 MODAL */
+/* ============================= */
+
+.modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.4);
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background: white;
+    padding: 30px;
+    border-radius: 16px;
+    width: 350px;
+}
+
+/* ============================= */
+/* 📱 MOBILE */
+/* ============================= */
+
+@media (max-width: 600px) {
+
+    .actions {
+        flex-direction: column;
     }
 
-    body {
-        padding: 12px;
-    }
-
-    .card {
-        padding: 16px;
+    button {
+        width: 100%;
     }
 }
-</style>
+
+/* ============================= */
+/* 🔄 LOADING OVERLAY */
+/* ============================= */
+
+.loader-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.4);
+    backdrop-filter: blur(4px);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.loader-box {
+    background: white;
+    padding: 30px 40px;
+    border-radius: 16px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+.spinner {
+    width: 45px;
+    height: 45px;
+    border: 4px solid #e3e3e3;
+    border-top: 4px solid #007bff;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    margin: 0 auto 15px;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* ============================= */
+/* 🔐 MODAL DESIGN UPGRADE */
+/* ============================= */
+
+.modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    backdrop-filter: blur(6px);
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+}
+
+.modal-content {
+    background: white;
+    padding: 30px;
+    border-radius: 18px;
+    width: 380px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.25);
+    animation: modalFade 0.25s ease;
+    position: relative;
+}
+
+@keyframes modalFade {
+    from { transform: scale(0.95); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.close-btn {
+    cursor: pointer;
+    font-size: 18px;
+    opacity: 0.6;
+}
+
+.close-btn:hover {
+    opacity: 1;
+}
+
+.admin-section label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    margin-top: 15px;
+    margin-bottom: 6px;
+}
+
+.modal-actions {
+    margin-top: 20px;
+    display: flex;
+    gap: 12px;
+    justify-content: space-between;
+}
+
+/* ============================= */
+/* 🔄 ADMIN LOADER */
+/* ============================= */
+
+.admin-loader {
+    display: none;
+    text-align: center;
+    padding: 20px 0;
+}
+
+.small-spinner {
+    width: 35px;
+    height: 35px;
+    border: 4px solid #e3e3e3;
+    border-top: 4px solid #007bff;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    margin: 0 auto 12px;
+}
+
+textarea {
+    width: 100%;
+    padding: 12px;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    font-size: 14px;
+    resize: vertical;
+    min-height: 120px;
+    transition: 0.2s ease;
+    font-family: inherit;
+}
+
+textarea:focus {
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(0,123,255,0.1);
+}
+
+
+
+
+    </style>
 </head>
 
 <body>
 
+<div class="header">
+    🚴 Cycling Department — Day End Dashboard
+</div>
+
 <div class="container">
 
-    <div class="header">
-        <h1>Decathlon – Cycling Department Report</h1>
-    </div>
+<div id="messageBox" class="message"></div>
 
-    <!-- DAILY INPUTS -->
-    <div class="card">
-        <h2>Daily Inputs</h2>
-        <div class="grid">
-            <div>
-                <label>Sport Name</label>
-                <input id="sport" value="Cycling">
-            </div>
-            <div>
-                <label>Date</label>
-                <input type="date" id="date">
-            </div>
-            <div>
-                <label>Target Sales (₹)</label>
-                <input type="number" id="target">
-            </div>
-            <div>
-                <label>Actual Sales (₹)</label>
-                <input type="number" id="sales">
-            </div>
-            <div>
-                <label>Total Quantity</label>
-                <input type="number" id="quantity">
-            </div>
-            <div>
-                <label>Margin (%)</label>
-                <input type="number" id="margin">
-            </div>
-            <div>
-                <label>Working Hours</label>
-                <input type="number" id="hours">
-            </div>
-            <div>
-                <label>Digital Sales (₹)</label>
-                <input type="number" id="digital">
-            </div>
+<!-- KPI SECTION -->
+
+
+<!-- DAILY INPUTS -->
+<div class="card">
+    <h2>Daily Inputs</h2>
+
+    <div class="grid">
+        <div>
+            <label>Sport Name</label>
+            <input id="sport" value="Cycling">
+        </div>
+
+        <div>
+            <label>Date</label>
+            <input type="date" id="date">
+        </div>
+
+        <div>
+            <label>Day Piloting (₹)</label>
+            <input type="number" id="target">
+        </div>
+
+        <div>
+            <label>Achieved (₹)</label>
+            <input type="number" id="sales">
+        </div>
+
+        <div>
+            <label>Total Quantity</label>
+            <input type="number" id="quantity">
+        </div>
+
+        <div>
+            <label>Margin (%)</label>
+            <input type="number" id="margin">
+        </div>
+
+        <div>
+            <label>Working Hours</label>
+            <input type="number" id="hours">
+        </div>
+
+        <div>
+            <label>Digital Sales (₹)</label>
+            <input type="number" id="digital">
         </div>
     </div>
+</div>
 
-    <!-- MONTHLY INPUTS -->
-    <div class="card">
-        <h2>Monthly Inputs</h2>
-        <div class="grid">
-            <div>
-                <label>Monthly Piloting (₹)</label>
-                <input type="number" id="monthlyPiloting" value="4500000">
-            </div>
-            <div>
-                <label>Monthly Achieved (₹)</label>
-                <input type="number" id="monthlySales" value="3258580">
-            </div>
-        </div>
-    </div>
+<!-- 📝 SYNTHESIS SECTION -->
+<div class="card">
+    <h2>Daily Synthesis</h2>
 
-    <!-- OBSERVATIONS -->
-    <div class="card">
-        <h2>Observations & Action Plan</h2>
-        <div class="grid">
-            <div>
-                <label>Observations</label>
-                <textarea id="observations" rows="4"></textarea>
-            </div>
-            <div>
-                <label>Action Plan for Tomorrow</label>
-                <textarea id="actions" rows="4"></textarea>
-            </div>
-        </div>
-        <br>
-        <button class="btn-primary" onclick="generateReport()">Generate Report</button>
-    </div>
+    <label>Key Highlights / Issues / Action Plan</label>
+    <textarea id="synthesis" rows="5" placeholder="Write performance summary, challenges, action plan for tomorrow..."></textarea>
+</div>
 
-    <!-- REPORT -->
-    <div class="card">
-        <h2>WhatsApp Ready Report</h2>
-        <div class="output" id="report"></div>
-        <br>
-        <button class="btn-success" onclick="copyReport()">Copy for WhatsApp</button>
+
+<!-- MONTHLY SECTION -->
+
+
+<!-- ACTION BUTTONS -->
+<div class="card">
+    <div class="actions">
+        <button class="btn-primary" onclick="submitReport()">Submit & Save</button>
+        <button class="btn-dark" onclick="openAdminModal()">🔐 Admin</button>
     </div>
+</div>
+
+<!-- REPORT SECTION -->
+<div class="card">
+    <h2>WhatsApp Ready Report</h2>
+    <div class="output" id="report"></div>
+    <br>
+    <button class="btn-success" onclick="copyReport()">Copy for WhatsApp</button>
+</div>
 
 </div>
 
+<!-- Admin Modal remains same as yours -->
+
+
+
+<!-- 🔐 ADMIN MODAL -->
+<div class="modal" id="adminModal">
+    <div class="modal-content">
+
+        <div class="modal-header">
+            <h3>🔐 Admin Panel</h3>
+            <span class="close-btn" onclick="closeAdmin()">✕</span>
+        </div>
+
+        <!-- 🔄 ADMIN LOADER -->
+        <div class="admin-loader" id="adminLoader">
+            <div class="small-spinner"></div>
+            <p>Updating Monthly Data...</p>
+        </div>
+
+        <!-- STEP 1 -->
+        <div id="adminStep1" class="admin-section">
+            <label>Enter Secret Code</label>
+            <input type="password" id="adminSecret">
+
+            <div class="modal-actions">
+                <button class="btn-primary" onclick="verifyAdmin()">Verify</button>
+                <button class="btn-danger" onclick="closeAdmin()">Cancel</button>
+            </div>
+        </div>
+
+        <!-- STEP 2 -->
+        <div id="adminStep2" class="admin-section" style="display:none;">
+
+            <label>Select Date</label>
+            <input type="date" id="adminDate">
+
+            <label>New Monthly Piloting</label>
+            <input type="number" id="adminPiloting">
+
+            <label>New Monthly Achieved</label>
+            <input type="number" id="adminAchieved">
+
+            <div class="modal-actions">
+                <button class="btn-primary" onclick="submitAdmin()">Update</button>
+                <button class="btn-danger" onclick="closeAdmin()">Cancel</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
 <script>
 
-const dateInput = document.getElementById("date");
-const salesInput = document.getElementById("sales");
-const quantityInput = document.getElementById("quantity");
-const marginInput = document.getElementById("margin");
-const hoursInput = document.getElementById("hours");
-const digitalInput = document.getElementById("digital");
-const observationsInput = document.getElementById("observations");
-const actionsInput = document.getElementById("actions");
+const scriptURL = "https://script.google.com/macros/s/AKfycbzk1GN48OujupHuNBeRrhuC74l-qdtYz2fdN9rH_Gjn5OsZ3PxV_3JwB7CBIi8yOJ9PNw/exec";
 
-const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzWWwWW4Hmkb37h_f7aYlLuijK1VBO4Nt8kSUHGggRzgQWtY3duT2rte7RU4L4z_Gvh/exec"; // 🔥 paste your URL here
+/* ============================= */
+/* 🔔 MESSAGE SYSTEM */
+/* ============================= */
 
-function generateReport() {
+function showMessage(text, type) {
+    const box = document.getElementById("messageBox");
+    box.innerText = text;
+    box.className = "message " + type;
+    box.style.display = "block";
 
-    const date = dateInput.value;
-    const sales = +salesInput.value || 0;
-    const quantity = +quantityInput.value || 0;
-    const margin = marginInput.value;
-    const hours = +hoursInput.value || 0;
-    const digital = +digitalInput.value || 0;
-
-    if (!date || !sales) {
-        alert("Please enter Date and Sales");
-        return;
-    }
-
-    // 🔥 Save Daily Data
-fetch(WEB_APP_URL, {
-    method: "POST",
-    body: new URLSearchParams({
-        date: date,
-        sales: sales,
-        quantity: quantity,
-        margin: margin,
-        hours: hours,
-        digital: digital,
-        observations: observationsInput.value,
-        actions: actionsInput.value
-    })
-})
-.then(res => res.json())
-.then(data => {
-
-    if (data.status === "duplicate") {
-        alert("Entry already exists for this date ❌");
-        return;
-    }
-
-    fetch(WEB_APP_URL)
-    .then(res => res.json())
-    .then(monthData => {
-
-        document.getElementById("report").innerText = `
-Hello Team,
-
-🚴 Cycling Department – Daily Review
-
-Date: ${date}
-
-Achieved - ₹${sales.toLocaleString()}
-Quantity - ${quantity}
-Margin - ${margin}%
-Hours Utilised - ${hours}
-Digital Contribution - ₹${digital.toLocaleString()}
-
------ MONTHLY PERFORMANCE -----
-
-Monthly Achieved - ₹${monthData.monthlyTotal.toLocaleString()}
-
-*Observations*
-${observationsInput.value}
-
-*Action Plans*
-${actionsInput.value}`;
-    });
-
-})
-.catch(error => {
-    console.error(error);
-    alert("Backend connection failed ❌");
-});
-
+    setTimeout(() => {
+        box.style.display = "none";
+    }, 3000);
 }
 
+/* ============================= */
+/* 📤 SUBMIT DAILY REPORT */
+/* ============================= */
+
+async function submitReport() {
+
+    showLoader();
+
+    try {
+
+        const data = {
+            sport: document.getElementById("sport").value,
+            date: document.getElementById("date").value,
+            target: document.getElementById("target").value,
+            sales: document.getElementById("sales").value,
+            quantity: document.getElementById("quantity").value,
+            margin: document.getElementById("margin").value,
+            hours: document.getElementById("hours").value,
+            digital: document.getElementById("digital").value
+        };
+
+        if (!data.date) {
+            showMessage("Date is required ❗", "error");
+            hideLoader();
+            return;
+        }
+
+        const response = await fetch(scriptURL, {
+            method: "POST",
+            headers: { "Content-Type": "text/plain" },
+            body: JSON.stringify(data)
+        });
+
+        const result = await response.json();
+
+        if (result.error) {
+            showMessage(result.error, "error");
+            hideLoader();
+            return;
+        }
+
+        showMessage("Saved Successfully ✅", "success");
+
+        generateReport(
+            result.updatedMonthlyAchieved,
+            result.realization,
+            result.monthlyTarget
+        );
+
+    } catch (err) {
+        console.error(err);
+        showMessage("Network Error ❌", "error");
+    }
+
+    hideLoader();
+}
+
+/* ============================= */
+/* 📊 GENERATE REPORT */
+/* ============================= */
+
+function generateReport(monthlyAchieved = 0, realization = 0, monthlyTarget = 0) {
+
+    const dayTarget = Number(document.getElementById("target").value) || 0;
+    const dayAchieved = Number(document.getElementById("sales").value) || 0;
+    const qty = Number(document.getElementById("quantity").value) || 0;
+    const hrs = Number(document.getElementById("hours").value) || 0;
+    const marginValue = Number(document.getElementById("margin").value) || 0;
+    const digitalValue = Number(document.getElementById("digital").value) || 0;
+
+    const efficiency = hrs > 0 ? (qty / hrs).toFixed(2) : 0;
+
+    const achievementPercent = dayTarget > 0
+        ? ((dayAchieved / dayTarget) * 100).toFixed(1)
+        : 0;
+
+    const digitalPercent = dayAchieved > 0
+        ? ((digitalValue / dayAchieved) * 100).toFixed(1)
+        : 0;
+
+    const gap = monthlyTarget - monthlyAchieved;
+
+    const manualSummary = document.getElementById("synthesis").value || "No summary provided.";
+
+
+const report = `
+CYCLING DEPARTMENT
+DAY END PERFORMANCE REPORT
+
+Date: ${document.getElementById("date").value}
+
+------------------------------------------------------------
+DAILY PERFORMANCE SUMMARY
+------------------------------------------------------------
+Dail Piloting: ₹${dayTarget.toLocaleString("en-IN")}
+Day Achieved: ₹${dayAchieved.toLocaleString("en-IN")}
+Achievement Percentage: ${achievementPercent}%
+
+Total Quantity Sold: ${qty}
+Total Working Hours: ${hrs}
+Efficiency : ${efficiency}
+
+Gross Margin: ${marginValue}%
+Digital Sales Contribution: ₹${digitalValue.toLocaleString("en-IN")}
+Digital Share of Sales: ${digitalPercent}%
+
+------------------------------------------------------------
+MONTHLY PERFORMANCE STATUS
+------------------------------------------------------------
+Month Piloting: ₹${Number(monthlyTarget || 0).toLocaleString("en-IN")}
+Month Achieved: ₹${Number(monthlyAchieved || 0).toLocaleString("en-IN")}
+Realization Percentage: ${realization || 0}%
+Performance Gap: ₹${Number(gap || 0).toLocaleString("en-IN")}
+
+------------------------------------------------------------
+MANAGEMENT SYNTHESIS
+------------------------------------------------------------
+${manualSummary}
+
+------------------------------------------------------------
+Prepared for Internal Review
+`;
+
+
+    document.getElementById("report").innerText = report;
+}
+
+/* ============================= */
+/* 📋 COPY REPORT */
+/* ============================= */
+
 function copyReport() {
-    navigator.clipboard.writeText(document.getElementById("report").innerText);
-    alert("Copied! Paste in WhatsApp.");
+    const text = document.getElementById("report").innerText;
+    navigator.clipboard.writeText(text);
+    showMessage("Copied for WhatsApp!", "success");
+}
+
+/* ============================= */
+/* 🔐 ADMIN FLOW */
+/* ============================= */
+
+function openAdminModal() {
+    document.getElementById("adminModal").style.display = "flex";
+
+    // Auto fill today's date
+    const today = new Date().toISOString().split("T")[0];
+    document.getElementById("adminDate").value = today;
+}
+
+function closeAdmin() {
+    document.getElementById("adminModal").style.display = "none";
+    document.getElementById("adminStep1").style.display = "block";
+    document.getElementById("adminStep2").style.display = "none";
+}
+
+function verifyAdmin() {
+    if (document.getElementById("adminSecret").value === "DECATHLON2026") {
+        document.getElementById("adminStep1").style.display = "none";
+        document.getElementById("adminStep2").style.display = "block";
+    } else {
+        showMessage("Invalid Secret ❌", "error");
+    }
+}
+
+async function submitAdmin() {
+
+    showAdminLoader();
+
+    try {
+
+        const data = {
+            adminMode: true,
+            secret: document.getElementById("adminSecret").value,
+            monthlyPiloting: document.getElementById("adminPiloting").value,
+            monthlyAchievedEdit: document.getElementById("adminAchieved").value,
+            date: document.getElementById("adminDate").value
+        };
+
+        if (!data.date) {
+            showMessage("Date is required ❗", "error");
+            hideAdminLoader();
+            return;
+        }
+
+        const response = await fetch(scriptURL, {
+            method: "POST",
+            headers: { "Content-Type": "text/plain" },
+            body: JSON.stringify(data)
+        });
+
+        const result = await response.json();
+
+        if (result.error) {
+            showMessage(result.error, "error");
+            hideAdminLoader();
+            return;
+        }
+
+        showMessage("Monthly Updated 🔐", "success");
+
+        setTimeout(() => {
+            hideAdminLoader();
+            closeAdmin();
+        }, 800);
+
+    } catch (err) {
+        console.error(err);
+        showMessage("Network Error ❌", "error");
+        hideAdminLoader();
+    }
+}
+
+/* ============================= */
+/* 🔄 LOADING SYSTEM */
+/* ============================= */
+
+function showLoader() {
+    document.getElementById("loader").style.display = "flex";
+}
+
+function hideLoader() {
+    document.getElementById("loader").style.display = "none";
+}
+
+function showAdminLoader() {
+    document.getElementById("adminLoader").style.display = "block";
+    document.getElementById("adminStep1").style.display = "none";
+    document.getElementById("adminStep2").style.display = "none";
+}
+
+function hideAdminLoader() {
+    document.getElementById("adminLoader").style.display = "none";
 }
 
 </script>
 
+
+<!-- 🔄 LOADING OVERLAY -->
+<div class="loader-overlay" id="loader">
+    <div class="loader-box">
+        <div class="spinner"></div>
+        <p>Saving Report...</p>
+    </div>
+</div>
 
 
 </body>
