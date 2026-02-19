@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Decathlon Cycling Day End Report</title>
+
+<style>
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+:root {
+    --primary: #005bbb;
+    --secondary: #f5f7fa;
+    --success: #198754;
+}
+
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background: var(--secondary);
+    margin: 0;
+    padding: 16px;
+    overflow-x: hidden;
+}
+
+.container {
+    width: 100%;
+    max-width: 1100px;
+    margin: auto;
+}
+
+.header {
+    background: var(--primary);
+    color: white;
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+}
+
+.card {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 20px;
+}
+
+.grid > div {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    font-weight: 600;
+    font-size: 14px;
+    margin-bottom: 6px;
+}
+
+input,
+textarea {
+    width: 100%;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+}
+
+textarea {
+    resize: vertical;
+}
+
+button {
+    border: none;
+    border-radius: 10px;
+    padding: 14px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.btn-primary {
+    background: var(--primary);
+    color: white;
+}
+
+.btn-success {
+    background: var(--success);
+    color: white;
+}
+
+.output {
+    background: #e9ecef;
+    border-radius: 12px;
+    padding: 16px;
+    white-space: pre-line;
+    font-family: 'Courier New', monospace;
+}
+
+@media (max-width: 480px) {
+    .grid {
+        grid-template-columns: 1fr;
+    }
+
+    body {
+        padding: 12px;
+    }
+
+    .card {
+        padding: 16px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="header">
+        <h1>Decathlon – Cycling Department Report</h1>
+    </div>
+
+    <!-- DAILY INPUTS -->
+    <div class="card">
+        <h2>Daily Inputs</h2>
+        <div class="grid">
+            <div>
+                <label>Sport Name</label>
+                <input id="sport" value="Cycling">
+            </div>
+            <div>
+                <label>Date</label>
+                <input type="date" id="date">
+            </div>
+            <div>
+                <label>Target Sales (₹)</label>
+                <input type="number" id="target">
+            </div>
+            <div>
+                <label>Actual Sales (₹)</label>
+                <input type="number" id="sales">
+            </div>
+            <div>
+                <label>Total Quantity</label>
+                <input type="number" id="quantity">
+            </div>
+            <div>
+                <label>Margin (%)</label>
+                <input type="number" id="margin">
+            </div>
+            <div>
+                <label>Working Hours</label>
+                <input type="number" id="hours">
+            </div>
+            <div>
+                <label>Digital Sales (₹)</label>
+                <input type="number" id="digital">
+            </div>
+        </div>
+    </div>
+
+    <!-- MONTHLY INPUTS -->
+    <div class="card">
+        <h2>Monthly Inputs</h2>
+        <div class="grid">
+            <div>
+                <label>Monthly Piloting (₹)</label>
+                <input type="number" id="monthlyPiloting" value="4500000">
+            </div>
+            <div>
+                <label>Monthly Achieved (₹)</label>
+                <input type="number" id="monthlySales" value="3258580">
+            </div>
+        </div>
+    </div>
+
+    <!-- OBSERVATIONS -->
+    <div class="card">
+        <h2>Observations & Action Plan</h2>
+        <div class="grid">
+            <div>
+                <label>Observations</label>
+                <textarea id="observations" rows="4"></textarea>
+            </div>
+            <div>
+                <label>Action Plan for Tomorrow</label>
+                <textarea id="actions" rows="4"></textarea>
+            </div>
+        </div>
+        <br>
+        <button class="btn-primary" onclick="generateReport()">Generate Report</button>
+    </div>
+
+    <!-- REPORT -->
+    <div class="card">
+        <h2>WhatsApp Ready Report</h2>
+        <div class="output" id="report"></div>
+        <br>
+        <button class="btn-success" onclick="copyReport()">Copy for WhatsApp</button>
+    </div>
+
+</div>
+
+<script>
+
+const dateInput = document.getElementById("date");
+const salesInput = document.getElementById("sales");
+const quantityInput = document.getElementById("quantity");
+const marginInput = document.getElementById("margin");
+const hoursInput = document.getElementById("hours");
+const digitalInput = document.getElementById("digital");
+const observationsInput = document.getElementById("observations");
+const actionsInput = document.getElementById("actions");
+
+const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzWWwWW4Hmkb37h_f7aYlLuijK1VBO4Nt8kSUHGggRzgQWtY3duT2rte7RU4L4z_Gvh/exec"; // 🔥 paste your URL here
+
+function generateReport() {
+
+    const date = dateInput.value;
+    const sales = +salesInput.value || 0;
+    const quantity = +quantityInput.value || 0;
+    const margin = marginInput.value;
+    const hours = +hoursInput.value || 0;
+    const digital = +digitalInput.value || 0;
+
+    if (!date || !sales) {
+        alert("Please enter Date and Sales");
+        return;
+    }
+
+    // 🔥 Save Daily Data
+    fetch(WEB_APP_URL, {
+        method: "POST",
+        body: JSON.stringify({
+            date: date,
+            sales: sales,
+            quantity: quantity,
+            margin: margin,
+            hours: hours,
+            digital: digital,
+            observations: observationsInput.value,
+            actions: actionsInput.value
+        })
+    })
+    .then(res => res.json())
+    .then(data => {
+
+        if (data.status === "duplicate") {
+            alert("Entry already exists for this date ❌");
+            return;
+        }
+
+        if (data.status === "success") {
+
+            // 🔥 Fetch Updated Monthly Total
+            fetch(WEB_APP_URL)
+            .then(res => res.json())
+            .then(monthData => {
+
+                const monthlyTotal = monthData.monthlyTotal;
+
+                document.getElementById("report").innerText = `
+Hello Team,
+
+🚴 Cycling Department – Daily Review
+
+Date: ${date}
+
+Achieved - ₹${sales.toLocaleString()}
+Quantity - ${quantity}
+Margin - ${margin}%
+Hours Utilised - ${hours}
+Digital Contribution - ₹${digital.toLocaleString()}
+
+----- MONTHLY PERFORMANCE -----
+
+Monthly Achieved - ₹${monthlyTotal.toLocaleString()}
+
+*Observations*
+${observationsInput.value}
+
+*Action Plans*
+${actionsInput.value}
+
+GREAT EFFORT TEAM 🚴🔥
+`;
+            });
+
+        }
+
+    })
+    .catch(err => {
+        alert("Error connecting to backend ❌");
+        console.error(err);
+    });
+}
+
+function copyReport() {
+    navigator.clipboard.writeText(document.getElementById("report").innerText);
+    alert("Copied! Paste in WhatsApp.");
+}
+
+</script>
+
+
+
+</body>
+</html>
