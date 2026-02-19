@@ -237,37 +237,32 @@ function generateReport() {
     }
 
     // 🔥 Save Daily Data
-    fetch(WEB_APP_URL, {
-        method: "POST",
-        body: JSON.stringify({
-            date: date,
-            sales: sales,
-            quantity: quantity,
-            margin: margin,
-            hours: hours,
-            digital: digital,
-            observations: observationsInput.value,
-            actions: actionsInput.value
-        })
+fetch(WEB_APP_URL, {
+    method: "POST",
+    body: new URLSearchParams({
+        date: date,
+        sales: sales,
+        quantity: quantity,
+        margin: margin,
+        hours: hours,
+        digital: digital,
+        observations: observationsInput.value,
+        actions: actionsInput.value
     })
+})
+.then(res => res.json())
+.then(data => {
+
+    if (data.status === "duplicate") {
+        alert("Entry already exists for this date ❌");
+        return;
+    }
+
+    fetch(WEB_APP_URL)
     .then(res => res.json())
-    .then(data => {
+    .then(monthData => {
 
-        if (data.status === "duplicate") {
-            alert("Entry already exists for this date ❌");
-            return;
-        }
-
-        if (data.status === "success") {
-
-            // 🔥 Fetch Updated Monthly Total
-            fetch(WEB_APP_URL)
-            .then(res => res.json())
-            .then(monthData => {
-
-                const monthlyTotal = monthData.monthlyTotal;
-
-                document.getElementById("report").innerText = `
+        document.getElementById("report").innerText = `
 Hello Team,
 
 🚴 Cycling Department – Daily Review
@@ -282,25 +277,21 @@ Digital Contribution - ₹${digital.toLocaleString()}
 
 ----- MONTHLY PERFORMANCE -----
 
-Monthly Achieved - ₹${monthlyTotal.toLocaleString()}
+Monthly Achieved - ₹${monthData.monthlyTotal.toLocaleString()}
 
 *Observations*
 ${observationsInput.value}
 
 *Action Plans*
-${actionsInput.value}
-
-GREAT EFFORT TEAM 🚴🔥
-`;
-            });
-
-        }
-
-    })
-    .catch(err => {
-        alert("Error connecting to backend ❌");
-        console.error(err);
+${actionsInput.value}`;
     });
+
+})
+.catch(error => {
+    console.error(error);
+    alert("Backend connection failed ❌");
+});
+
 }
 
 function copyReport() {
